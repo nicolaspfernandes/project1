@@ -10,6 +10,11 @@ const createCampaignSchema = Joi.object().keys({
     content: Joi.string().trim().required()
 });
 
+const searchCampaignsByUserSchema = Joi.object().keys({
+    userId: Joi.number().required()
+});
+
 module.exports = {
-    createCampaignSchema
+    createCampaignSchema,
+    searchCampaignsByUserSchema
 };

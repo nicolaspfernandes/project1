@@ -11,12 +11,28 @@ const campaignService = {
 
         await validate(data, campaignSchema.createCampaignSchema);
 
-        data.createdAt = moment().format('DD/MM/YYYY');
-        return await campaignRepository.putItem(data);
+        const item = Object.assign({}, data, {
+            createdAt: moment().format('DD/MM/YYYY')
+        });
+        await campaignRepository.putItem(item);
+
+        return item;
     },
 
-    async searchCampaigns(search, projection) {
-        return await campaignRepository.query();
+    searchCampaigns() {
+        return campaignRepository.scan();
+    },
+
+    async searchCampaignsByUser(userId) {
+        
+        await validate({ userId }, campaignSchema.searchCampaignsByUserSchema);
+
+        return campaignRepository.query({
+            KeyConditionExpression: 'userId = :pUserId',
+            ExpressionAttributeValues: {
+                ':pUserId': Number(userId)
+            }
+        });
     }
 };
 

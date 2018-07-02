@@ -4,14 +4,19 @@ const { client } = require('../infrastructure/dynamodb');
 
 const dynamodbRepository = TableName => ({
 
-    async putItem(data) {
-        return await client.put({ TableName, Item: data });
+    putItem(data) {
+        return client.put({ TableName, Item: data }).promise();
     },
     
-    async query(expression, projection) {
+    async scan() {
+        const result = await client.scan({ TableName }).promise();
+        return result.Items;
+    },
 
-        expression.TableName = TableName;
-        const result = await client.query(expression);
+    async query(expression) {
+
+        expression = Object.assign({}, expression, { TableName });
+        const result = await client.query(expression).promise();
         return result.Items;
     }
 });

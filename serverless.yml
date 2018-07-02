@@ -11,8 +11,8 @@ provider:
   environment:
     DYNAMODB_REGION: sa-east-1
     DYNAMODB_ENDPOINT: http://localhost:8000
-    DYNAMODB_READ_UNITS: 1
-    DYNAMODB_WRITE_UNITS: 1
+    DYNAMODB_ACCESS_KEY_ID: test
+    DYNAMODB_SECRET_ACCESS_KEY: test
     
 functions:
 
@@ -29,6 +29,14 @@ functions:
     events:
       - http:
           path: /campaigns
+          method: get
+          cors: true
+
+  searchCampaignsByUser:
+    handler: src/functions/campaigns/search-by-user.handler
+    events:
+      - http:
+          path: /campaigns/{userId}
           method: get
           cors: true
 

@@ -2,11 +2,12 @@
 
 const { campaignService, responseService } = require('../../services');
 
-module.exports.handler = async () => {
+module.exports.handler = async (event) => {
 
   try {
     
-    const campaigns = await campaignService.searchCampaigns();
+    const { pathParameters } = event;
+    const campaigns = await campaignService.searchCampaignsByUser(pathParameters.userId);
     return responseService.buildSuccess(campaigns);
 
   } catch (exception) {

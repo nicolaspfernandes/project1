@@ -2,27 +2,28 @@
 
 const AWS = require('aws-sdk');
 
-const region = 'sa-east-1';
-const tableName = 'Campaigns';
-const endpoint = 'http://localhost:8000';
+const client = new AWS.DynamoDB({ 
+    region: 'sa-east-1', 
+    endpoint: 'http://localhost:8000', 
+    accessKeyId: 'test', 
+    secretAccessKey: 'test' 
+});
 
-const client = new AWS.DynamoDB({ region, endpoint });
-
-var campaignsTable = {
-    TableName: tableName,
+const campaignsTable = {
+    TableName: 'Campaigns',
     KeySchema: [{
-        AttributeName: 'name', 
-        KeyType: 'HASH'
+       AttributeName: 'userId',
+       KeyType: 'HASH' 
     }, {
-        AttributeName: 'scheduledTo',
+        AttributeName: 'name', 
         KeyType: 'RANGE'
     }],
     AttributeDefinitions: [{
         AttributeName: 'name',
         AttributeType: 'S'
     }, {
-        AttributeName: 'scheduledTo',
-        AttributeType: 'S'
+        AttributeName: 'userId',
+        AttributeType: 'N'
     }],
     ProvisionedThroughput: {
         ReadCapacityUnits: 1, 

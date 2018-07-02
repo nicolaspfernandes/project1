@@ -13,19 +13,19 @@ function buildResponse(data, statusCode) {
     };
 }
 
-function buildSuccess(data, statusCode) {
+const responseService = {
 
-    const status = statusCode || (data.statusCode || 200);
-    return buildResponse(data, status);
-}
+    buildSuccess(data, statusCode) {
 
-function buildError(error, statusCode) {
+        const status = statusCode || data.statusCode || 200;
+        return buildResponse(data, status);
+    },
 
-    const status = statusCode || (error.statusCode || 500);
-    return buildResponse(error, status);
-}
+    buildError(error, statusCode) {
 
-module.exports = {
-    buildError, 
-    buildSuccess
+        const status = statusCode || error.statusCode || 500;
+        return buildResponse(error, status);
+    }
 };
+
+module.exports = responseService;
