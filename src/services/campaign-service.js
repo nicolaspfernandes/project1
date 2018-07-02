@@ -15,7 +15,7 @@ const campaignService = {
         return await campaignRepository.putItem(data);
     },
 
-    async getCampaignsBySearch(search, projection) {
+    async searchCampaigns(search, projection) {
         return await campaignRepository.query();
     }
 };
