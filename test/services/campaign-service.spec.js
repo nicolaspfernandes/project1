@@ -5,7 +5,7 @@ const sinon = require('sinon');
 const moment = require('moment');
 const fixture = require('./campaign-service.fixture');
 const { campaignService } = require('../../src/services');
-const { documentClient } = require('../../src/infrastructure/dynamodb');
+const { client } = require('../../src/infrastructure/dynamodb');
 
 chai.should();
 
@@ -14,7 +14,7 @@ let clientPutStub = null;
 describe('Testing src/services/campaign-service.js file.', () => {
 
     beforeEach(() => {
-        clientPutStub = sinon.stub(documentClient, 'put');
+        clientPutStub = sinon.stub(client, 'put');
     });
 
     afterEach(() => {

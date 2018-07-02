@@ -8,12 +8,10 @@ const dynamodbRepository = TableName => ({
         return await client.put({ TableName, Item: data });
     },
     
-    async getItem(data) {
-        return await client.get({ TableName, Key: data });
-    },
-
     async query(expression, projection) {
-        const result = await client.scan({ TableName });
+
+        expression.TableName = TableName;
+        const result = await client.query(expression);
         return result.Items;
     }
 });
