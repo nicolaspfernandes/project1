@@ -5,20 +5,20 @@ const sinon = require('sinon');
 const moment = require('moment');
 const fixture = require('./create.fixture');
 const { campaigns } = require('../../src/functions');
-const { client } = require('../../src/infrastructure/dynamodb');
+const { campaignRepository } = require('../../src/repositories');
 
 chai.should();
 
-let clientPutStub = null;
+let campaignPutStub = null;
 
 describe('Testing src/functions/create.js script.', () => {
 
     beforeEach(() => {
-        clientPutStub = sinon.stub(client, 'put');
+        campaignPutStub = sinon.stub(campaignRepository, 'putItem');
     });
 
     afterEach(() => {
-        clientPutStub.restore();
+        campaignPutStub.restore();
     });
 
     describe('Testing handler method.', () => {
@@ -70,15 +70,7 @@ describe('Testing src/functions/create.js script.', () => {
                 description: '"name" length must be at least 3 characters long'
             });
         });
-
-
-
-
-
-
-
-
-
+        
         it('Should fail when parameter `name` has length greater than 30.', async () => {
 
             const body = Object.assign({}, fixture.request, { name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' });
@@ -226,14 +218,14 @@ describe('Testing src/functions/create.js script.', () => {
 
         it('Should fail when an unexpected error occurs.', async () => {
 
-            clientPutStub.throws();
+            campaignPutStub.throws('Unexpected error');
             const response = await campaigns.create.handler({ body: JSON.stringify(fixture.request) });
             response.statusCode.should.be.equal(500);
         });
 
         it('Should create a campaign successfully and returning the desired values.', async () => {
 
-            clientPutStub.resolves(fixture.response);
+            campaignPutStub.resolves(fixture.response);
             const response = await campaigns.create.handler({ body: JSON.stringify(fixture.request) });
             
             response.statusCode.should.be.equal(201);
