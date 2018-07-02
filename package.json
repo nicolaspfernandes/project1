@@ -7,9 +7,12 @@
   "author": "Nicolas Fernandes <nicolaspfernandes@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "serverless offline start",
-    "test": "nyc --reporter text-summary mocha --ui bdd --reporter spec --recursive",
-    "lint": "eslint --format compact src/"
+    "start": "npm run compose && npm run db:create && npm run sls:start",
+    "sls:start": "serverless offline start",
+    "compose": "docker-compose -f config/databases/docker-compose.yml up -d",
+    "db:create": "node config/databases/seed.js",
+    "test": "nyc mocha --ui bdd --reporter spec --recursive",
+    "lint": "eslint --format compact src/ test/"
   },
   "dependencies": {
     "aws-sdk": "2.265.1",
