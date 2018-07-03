@@ -7,11 +7,12 @@
   "author": "Nicolas Fernandes <nicolaspfernandes@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "npm run compose && npm run db:create && npm run sls:start",
-    "sls:start": "serverless offline start",
+    "start": "serverless offline start",
+    "env:up": "npm run compose && npm run db:create",
     "compose": "docker-compose -f config/databases/docker-compose.yml up -d",
     "db:create": "node config/databases/seed.js",
-    "test": "nyc mocha --ui bdd --reporter spec --recursive",
+    "test": "mocha --ui bdd test/ --recursive",
+    "coverage": "nyc npm test",
     "lint": "eslint --format compact src/ test/"
   },
   "dependencies": {

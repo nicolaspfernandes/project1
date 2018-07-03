@@ -14,8 +14,8 @@ const campaignService = {
         const item = Object.assign({}, data, {
             createdAt: moment().format('DD/MM/YYYY')
         });
+        
         await campaignRepository.putItem(item);
-
         return item;
     },
 
@@ -33,7 +33,7 @@ const campaignService = {
             ExpressionAttributeValues: {
                 ':pUserId': Number(userId)
             },
-            ScanIndexForward: false
+            ScanIndexForward: true
         });
     }
 };

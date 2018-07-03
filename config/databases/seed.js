@@ -47,8 +47,4 @@ const campaignsTable = {
     }
 };
 
-//client.deleteTable({ TableName: 'Campaigns' }, (err, data) => console.log(err, data));
-
-client.createTable(campaignsTable, (err, data) => {
-    console.log(err, data);
-});
+client.createTable(campaignsTable);
