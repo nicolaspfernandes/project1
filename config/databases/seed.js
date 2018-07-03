@@ -24,6 +24,22 @@ const campaignsTable = {
     }, {
         AttributeName: 'userId',
         AttributeType: 'N'
+    }, {
+        AttributeName: 'scheduledTo',
+        AttributeType: 'S'
+    }],
+    LocalSecondaryIndexes: [{
+        IndexName: 'ScheduledToIndex',
+        KeySchema: [{
+            AttributeName: 'userId',
+            KeyType: 'HASH' 
+         }, {
+            AttributeName: 'scheduledTo',
+            KeyType: 'RANGE'
+        }],
+        Projection: {
+            ProjectionType: 'ALL'
+        }
     }],
     ProvisionedThroughput: {
         ReadCapacityUnits: 1, 
@@ -31,4 +47,8 @@ const campaignsTable = {
     }
 };
 
-client.createTable(campaignsTable);
+//client.deleteTable({ TableName: 'Campaigns' }, (err, data) => console.log(err, data));
+
+client.createTable(campaignsTable, (err, data) => {
+    console.log(err, data);
+});

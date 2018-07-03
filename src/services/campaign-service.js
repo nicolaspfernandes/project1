@@ -28,10 +28,12 @@ const campaignService = {
         await validate({ userId }, campaignSchema.searchCampaignsByUserSchema);
 
         return campaignRepository.query({
+            IndexName: 'ScheduledToIndex',
             KeyConditionExpression: 'userId = :pUserId',
             ExpressionAttributeValues: {
                 ':pUserId': Number(userId)
-            }
+            },
+            ScanIndexForward: false
         });
     }
 };
