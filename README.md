@@ -26,7 +26,7 @@ In order to run this project, we need to setup some dependencies first:
 
 #### Tests
 
-Run the command below to see all test cases running:
+Run one of the commands below to see all test cases running:
 ```sh
 $ yarn test
 ```
@@ -34,7 +34,7 @@ $ yarn test
 $ npm test
 ```
 
-If you want to see detailed coverage report, run the command below:
+If you want to see detailed coverage report, run one of the commands below:
 ```sh
 $ yarn run coverage
 ```
@@ -44,7 +44,7 @@ $ npm run coverage
 
 #### Others
 
-If you want to see ESLint running, just run the command below:
+If you want to see ESLint running, just run one of the commands below:
 ```sh
 $ yarn run lint
 ```
